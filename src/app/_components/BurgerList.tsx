@@ -39,6 +39,7 @@ export function AllResturants({
       <div className="mb-2 flex gap-2">
         <Select
           value={country}
+          key={country}
           onValueChange={(value) => filterByCountry(value)}
         >
           <SelectTrigger className="w-[180px]">
