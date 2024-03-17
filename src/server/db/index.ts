@@ -1,19 +1,12 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
 
-import { env } from "~/env";
 import * as schema from "./schema";
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
-const globalForDb = globalThis as unknown as {
-  conn: Database.Database | undefined;
-};
+const client = createClient({
+  url: "libsql://isak-dev-isakfagerlund.turso.io",
+  authToken:
+    "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA2MDk1NjgsImlkIjoiMzJhMTgyNjMtYTMxNy00NzI3LWE1YjAtNTVkN2FlYzg2ZjY1In0.P0SJtIRGUdARNwuGKU4tmsqPKOvlhxE2s5A3gE2RSZHuFYbuARHBANaISbEFVwRVddZi6StvR92R_bYC9HloBA",
+});
 
-export const conn =
-  globalForDb.conn ?? new Database(env.DATABASE_URL, { fileMustExist: false });
-if (env.NODE_ENV !== "production") globalForDb.conn = conn;
-
-export const db = drizzle(conn, { schema });
+export const db = drizzle(client, { schema });

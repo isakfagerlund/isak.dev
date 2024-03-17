@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { burgers } from "~/server/db/schema";
 
 export const burgerRouter = createTRPCRouter({
   hello: publicProcedure
@@ -10,9 +11,7 @@ export const burgerRouter = createTRPCRouter({
       };
     }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.burgers.findFirst({
-      orderBy: (posts, { desc }) => [desc(posts.createdAt)],
-    });
+  getAll: publicProcedure.query(({ ctx }) => {
+    return ctx.db.select().from(burgers);
   }),
 });

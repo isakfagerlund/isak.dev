@@ -17,6 +17,8 @@ type FoodTested = {
   price: string;
 };
 
+type Image = string;
+
 export const burgers = createTable("burger", {
   id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   resturantName: text("resturant_name", { length: 256 }),
@@ -24,9 +26,13 @@ export const burgers = createTable("burger", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   updatedAt: int("updatedAt", { mode: "timestamp" }),
-  rating: int("rating", { mode: "number" }),
+  rating: int("rating", { mode: "number" }).notNull(),
   description: text("description"),
   address: text("address"),
   country: text("country", { length: 256 }),
-  testedFood: blob("tested_food").$type<FoodTested[]>(),
+  testedFood: text("tested_food", { mode: "json" }).$type<FoodTested[]>(),
+  images: text("images", { mode: "json" }).$type<Image[]>(),
 });
+
+export type SelectBurger = typeof burgers.$inferSelect;
+export type InsertBurger = typeof burgers.$inferInsert;
