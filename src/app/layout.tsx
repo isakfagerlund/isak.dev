@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </main>
         </body>
+        <SpeedInsights />
       </html>
     </ClerkProvider>
   );
