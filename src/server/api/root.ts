@@ -1,4 +1,4 @@
-import { burgerRouter } from "~/server/api/routers/post";
+import { burgerRouter } from "~/server/api/routers/burger";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**

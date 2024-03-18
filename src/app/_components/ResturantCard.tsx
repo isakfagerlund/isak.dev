@@ -1,6 +1,7 @@
 import { type SelectBurger } from "~/server/db/schema";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Rating } from "./Rating";
+import Image from "next/image";
 
 type ResturantCardProps = {
   burger: SelectBurger;
@@ -21,11 +22,14 @@ export const ResturantCard = ({ burger }: ResturantCardProps) => {
 
       <CardContent className="h-[172px] px-4 pb-4 pt-0">
         {burger?.images?.[0] ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
+            priority
+            placeholder="blur"
             className="h-full w-full rounded-lg border border-slate-100 object-cover"
             alt="burger"
             src={burger.images[0]}
+            width={300}
+            height={170}
           />
         ) : (
           "No Images"

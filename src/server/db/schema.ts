@@ -22,11 +22,11 @@ type Image = string;
 export const burgers = createTable("burger", {
   id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   resturantName: text("resturant_name", { length: 256 }),
-  createdAt: int("created_at", { mode: "timestamp" })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  createdAt: int("created_at", { mode: "timestamp" }).default(
+    sql`CURRENT_TIMESTAMP`,
+  ),
   updatedAt: int("updatedAt", { mode: "timestamp" }),
-  rating: int("rating", { mode: "number" }).notNull(),
+  rating: int("rating", { mode: "number" }),
   description: text("description"),
   address: text("address"),
   country: text("country", { length: 256 }),
