@@ -1,19 +1,11 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { type InsertBurger, burgers } from "~/server/db/schema";
-
-const InsertBurgerSchema = z.object({
-  id: z.number(),
-  resturantName: z.string().nullable(),
-  createdAt: z.date().nullable(),
-  updatedAt: z.date().nullable(),
-  rating: z.number().nullable(),
-  description: z.string().nullable(),
-  address: z.string().nullable(),
-  country: z.string().nullable(),
-  images: z.array(z.string()).nullable(),
-});
+import {
+  type InsertBurger,
+  burgers,
+  InsertBurgerSchema,
+} from "~/server/db/schema";
 
 export const burgerRouter = createTRPCRouter({
   hello: publicProcedure

@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { type Metadata } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,7 +17,7 @@ export const metadata = {
   title: "isak.dev",
   description: "Isak Fagerlund - Software Engineer",
   icons: [{ rel: "icon", url: "/sparkles.svg" }],
-};
+} satisfies Metadata;
 
 export default function RootLayout({
   children,
@@ -24,22 +25,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        elements: {
-          footer: "hidden",
-        },
-      }}
-    >
-      <html lang="en">
-        <body className={`font-sans ${inter.variable}`}>
-          <main className="container m-auto">
-            <TRPCReactProvider>{children}</TRPCReactProvider>
-          </main>
-        </body>
-        <SpeedInsights />
-        <Analytics />
-      </html>
-    </ClerkProvider>
+    <>
+      <ClerkProvider
+        appearance={{
+          elements: {
+            footer: "hidden",
+          },
+        }}
+      >
+        <html lang="en">
+          <body className={`font-sans ${inter.variable}`}>
+            <main className="container m-auto">
+              <TRPCReactProvider>{children}</TRPCReactProvider>
+            </main>
+            <SpeedInsights />
+            <Analytics />
+          </body>
+        </html>
+      </ClerkProvider>
+    </>
   );
 }

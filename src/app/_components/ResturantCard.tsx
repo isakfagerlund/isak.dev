@@ -24,7 +24,6 @@ export const ResturantCard = ({ burger }: ResturantCardProps) => {
         {burger?.images?.[0] ? (
           <Image
             priority
-            placeholder="blur"
             className="h-full w-full rounded-lg border border-slate-100 object-cover"
             alt="burger"
             src={burger.images[0]}

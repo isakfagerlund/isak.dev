@@ -1,19 +1,8 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "~/app/_components/ui/button";
-import { Dialog, DialogTrigger } from "~/app/_components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/app/_components/ui/dropdown-menu";
 import { type SelectBurger } from "~/server/db/schema";
-import { EditBurger } from "./EditBurger";
+import { EditDropdown } from "./EditDropdown";
 
 export const columns: ColumnDef<SelectBurger>[] = [
   {
@@ -57,28 +46,7 @@ export const columns: ColumnDef<SelectBurger>[] = [
     cell: ({ row }) => {
       const burger = row.original;
 
-      return (
-        <Dialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DialogTrigger asChild>
-                <DropdownMenuItem className="cursor-pointer">
-                  Edit Resturant
-                </DropdownMenuItem>
-              </DialogTrigger>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <EditBurger burger={burger} />
-        </Dialog>
-      );
+      return <EditDropdown burger={burger} />;
     },
   },
 ];

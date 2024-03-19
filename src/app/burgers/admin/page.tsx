@@ -14,7 +14,6 @@ export default async function BurgersAdmin() {
 
   return (
     <div>
-      <p>Only admins can access this page</p>
       <DataTable columns={columns} data={allBurgers} />
     </div>
   );

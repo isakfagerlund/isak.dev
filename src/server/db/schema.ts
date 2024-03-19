@@ -2,7 +2,8 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm";
-import { blob, int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import { int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import { z } from "zod";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -32,6 +33,30 @@ export const burgers = createTable("burger", {
   country: text("country", { length: 256 }),
   testedFood: text("tested_food", { mode: "json" }).$type<FoodTested[]>(),
   images: text("images", { mode: "json" }).$type<Image[]>(),
+});
+
+export const InsertBurgerSchema = z.object({
+  id: z.number(),
+  resturantName: z.string().min(2).nullable(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  rating: z.string().nullable(),
+  description: z.string().nullable(),
+  address: z.string().nullable(),
+  country: z.string().nullable(),
+  images: z.array(z.string().url()).nullable(),
+});
+
+export const SelectBurgerSchema = z.object({
+  id: z.number(),
+  resturantName: z.string().min(2).nullable(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  rating: z.number().nullable(),
+  description: z.string().nullable(),
+  address: z.string().nullable(),
+  country: z.string().nullable(),
+  images: z.array(z.string().url()).nullable(),
 });
 
 export type SelectBurger = typeof burgers.$inferSelect;
