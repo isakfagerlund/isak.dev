@@ -27,8 +27,8 @@ export const ResturantCard = ({ burger }: ResturantCardProps) => {
             className="h-full w-full rounded-lg border border-slate-100 object-cover"
             alt="burger"
             src={burger.images[0]}
-            width={300}
-            height={170}
+            width={500}
+            height={500}
           />
         ) : (
           "No Images"

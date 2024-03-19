@@ -35,7 +35,7 @@ export default function RootLayout({
       >
         <html lang="en">
           <body className={`font-sans ${inter.variable}`}>
-            <main className="container m-auto">
+            <main className="container m-auto h-dvh">
               <TRPCReactProvider>{children}</TRPCReactProvider>
             </main>
             <SpeedInsights />

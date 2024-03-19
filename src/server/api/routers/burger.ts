@@ -16,6 +16,17 @@ export const burgerRouter = createTRPCRouter({
       };
     }),
 
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select()
+        .from(burgers)
+        .where(eq(burgers.id, parseInt(input.id)));
+
+      return result[0];
+    }),
+
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.select().from(burgers);
   }),

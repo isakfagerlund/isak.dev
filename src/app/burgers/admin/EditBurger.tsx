@@ -105,9 +105,9 @@ export function EditBurger({
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Review</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value ?? ""} />
+                  <Textarea {...field} value={field.value ?? ""} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 export function AllResturants({
   burgers,
@@ -72,7 +73,9 @@ export function AllResturants({
       {filteredBurgers ? (
         <div className="grid h-full w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredBurgers.map((burger) => (
-            <ResturantCard key={burger.id} burger={burger} />
+            <Link key={burger.id} href={`/burgers/${burger.id}`}>
+              <ResturantCard burger={burger} />
+            </Link>
           ))}
         </div>
       ) : (
