@@ -11,7 +11,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="m-auto flex h-full max-w-[600px] flex-col justify-between py-6">
+    <div className="m-auto flex h-[calc(100vh-72px)] max-w-[600px] flex-col justify-between pb-3">
       <section>
         <p className="text-slate-500">
           {burger.country?.split(" ")[0]}, {burger.address}{" "}
@@ -21,7 +21,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
           {burger.resturantName}
         </h1>
         <Rating rating={burger.rating ?? 0} />
-        <p className="mt-3 leading-7">
+        <p className="mt-3 pb-2 leading-7">
           {burger.description ?? "Review coming soon"}
         </p>
       </section>
