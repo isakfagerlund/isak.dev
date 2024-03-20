@@ -40,6 +40,10 @@ export const columns: ColumnDef<SelectBurger>[] = [
   {
     accessorKey: "description",
     header: "Description",
+    cell: ({ row }) => {
+      const description: string = row.getValue("description");
+      return <div className="max-w-xs truncate">{description}</div>;
+    },
   },
   {
     id: "actions",
