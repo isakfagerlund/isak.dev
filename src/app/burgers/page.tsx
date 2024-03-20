@@ -9,9 +9,6 @@ export default async function Burgers() {
   ) as string[];
 
   return (
-    <>
-      <h1 className="py-8">Isaks Burgers</h1>
-      <AllResturants burgers={allBurgers} allCountries={allCountriesUnique} />
-    </>
+    <AllResturants burgers={allBurgers} allCountries={allCountriesUnique} />
   );
 }
