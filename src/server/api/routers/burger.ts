@@ -39,4 +39,11 @@ export const burgerRouter = createTRPCRouter({
         .set(input as InsertBurger)
         .where(eq(burgers.id, input.id));
     }),
+
+  addBurger: publicProcedure
+    .input(InsertBurgerSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.db
+        .insert(burgers).values(input as InsertBurger)
+    }),
 });
