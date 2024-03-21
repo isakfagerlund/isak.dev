@@ -29,7 +29,7 @@ export const burgers = createTable("burger", {
   updatedAt: int("updatedAt", { mode: "timestamp" }),
   rating: int("rating", { mode: "number" }),
   description: text("description"),
-  address: text("address"),
+  city: text("city"),
   country: text("country", { length: 256 }),
   testedFood: text("tested_food", { mode: "json" }).$type<FoodTested[]>(),
   images: text("images", { mode: "json" }).$type<Image[]>(),
@@ -42,7 +42,7 @@ export const InsertBurgerSchema = z.object({
   updatedAt: z.date().nullable(),
   rating: z.string().nullable(),
   description: z.string().nullable(),
-  address: z.string().nullable(),
+  city: z.string().nullable(),
   country: z.string().nullable(),
   images: z.array(z.string().url()).nullable(),
 });
@@ -54,7 +54,7 @@ export const SelectBurgerSchema = z.object({
   updatedAt: z.date().nullable(),
   rating: z.number().nullable(),
   description: z.string().nullable(),
-  address: z.string().nullable(),
+  city: z.string().nullable(),
   country: z.string().nullable(),
   images: z.array(z.string().url()).nullable(),
 });

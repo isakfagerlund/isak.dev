@@ -115,7 +115,7 @@ export function EditBurger({
           />
           <FormField
             control={form.control}
-            name="address"
+            name="city"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Address</FormLabel>

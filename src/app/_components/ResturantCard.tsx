@@ -15,7 +15,7 @@ export const ResturantCard = ({ burger }: ResturantCardProps) => {
         <div>
           <p className="font-semibold lowercase">{burger.resturantName}</p>
           <p className="font-light lowercase text-gray-600">
-            {burger.address} {burger.country?.split(" ")[1]}
+            {burger.city} {burger.country?.split(" ")[1]}
           </p>
         </div>
         <Rating rating={burger.rating ?? 0} />
