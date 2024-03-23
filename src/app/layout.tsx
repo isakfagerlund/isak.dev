@@ -25,24 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <ClerkProvider
-        appearance={{
-          elements: {
-            footer: "hidden",
-          },
-        }}
-      >
-        <html lang="en">
-          <body className={`font-sans ${inter.variable}`}>
-            <main className="container m-auto h-dvh">
-              <TRPCReactProvider>{children}</TRPCReactProvider>
-            </main>
-            <SpeedInsights />
-            <Analytics />
-          </body>
-        </html>
-      </ClerkProvider>
-    </>
+    <html lang="en">
+      <body className={`font-sans ${inter.variable}`}>
+        <main className="container m-auto h-dvh">
+          <ClerkProvider
+            appearance={{
+              elements: {
+                footer: "hidden",
+              },
+            }}
+          >
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </ClerkProvider>
+        </main>
+        <SpeedInsights />
+        <Analytics />
+      </body>
+    </html>
   );
 }
