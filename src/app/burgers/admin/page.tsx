@@ -1,21 +1,20 @@
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { ClerkProvider, UserButton } from "@clerk/nextjs";
-
 import { api } from "~/trpc/server";
 
 export default async function BurgersAdmin() {
+  const { sessionClaims } = auth();
   const allBurgers = await api.burger.getAll();
 
+  if (sessionClaims?.metadata.role !== "admin") {
+    redirect("/");
+  }
+
   return (
-    <div className="flex flex-col">
-      <ClerkProvider>
-        <header className="flex justify-between py-2">
-          <h2>Admin page</h2>
-          <UserButton />
-        </header>
-        <DataTable columns={columns} data={allBurgers} />
-      </ClerkProvider>
+    <div>
+      <DataTable columns={columns} data={allBurgers} />
     </div>
   );
 }
