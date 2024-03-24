@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
@@ -28,15 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <main className="container m-auto h-dvh">
-          <ClerkProvider
-            appearance={{
-              elements: {
-                footer: "hidden",
-              },
-            }}
-          >
-            <TRPCReactProvider>{children}</TRPCReactProvider>
-          </ClerkProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
         </main>
         <SpeedInsights />
         <Analytics />
