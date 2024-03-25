@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "~/app/_components/ui/dialog";
 import { Input } from "~/app/_components/ui/input";
-import { InsertBurgerSchema, type SelectBurger } from "~/server/db/schema";
 import { api } from "~/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -24,9 +23,10 @@ import {
 } from "~/app/_components/ui/form";
 import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
-import { cn } from "~/lib/utils";
+import { InsertBurgerSchema, cn } from "~/lib/utils";
 import { CircleXIcon } from "lucide-react";
 import { type Dispatch, type SetStateAction } from "react";
+import { type SelectBurger } from "~/server/db/types";
 
 export function EditBurger({
   burger,
