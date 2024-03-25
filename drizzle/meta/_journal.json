@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1711376355450,
+      "tag": "0000_young_terrax",
+      "breakpoints": true
+    }
+  ]
+}

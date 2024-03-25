@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -23,3 +24,27 @@ export const toBase64 = (str: string) =>
   typeof window === "undefined"
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
+
+export const InsertBurgerSchema = z.object({
+  id: z.number(),
+  resturantName: z.string().min(2).nullable(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  rating: z.string().nullable(),
+  description: z.string().nullable(),
+  city: z.string().nullable(),
+  country: z.string().nullable(),
+  images: z.array(z.string().url()).nullable(),
+});
+
+export const SelectBurgerSchema = z.object({
+  id: z.number(),
+  resturantName: z.string().min(2).nullable(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
+  rating: z.number().nullable(),
+  description: z.string().nullable(),
+  city: z.string().nullable(),
+  country: z.string().nullable(),
+  images: z.array(z.string().url()).nullable(),
+});
