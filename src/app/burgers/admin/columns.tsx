@@ -1,8 +1,8 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { type SelectBurger } from "~/server/db/schema";
 import { EditDropdown } from "./EditDropdown";
+import { type SelectBurger } from "~/server/db/types";
 
 export const columns: ColumnDef<SelectBurger>[] = [
   {

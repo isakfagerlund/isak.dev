@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "~/app/_components/ui/dropdown-menu";
 import { EditBurger } from "./EditBurger";
-import { type SelectBurger } from "~/server/db/schema";
+import { type SelectBurger } from "~/server/db/types";
 
 export const EditDropdown = ({ burger }: { burger: SelectBurger }) => {
   const [open, setOpen] = useState(false);

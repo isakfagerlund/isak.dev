@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { type SelectBurger } from "~/server/db/schema";
 import { Button } from "./ui/button";
 import { ResturantCard } from "./ResturantCard";
 import {
@@ -13,6 +12,7 @@ import {
 } from "./ui/select";
 import { X } from "lucide-react";
 import Link from "next/link";
+import { type SelectBurger } from "~/server/db/types";
 
 export function AllResturants({
   burgers,

@@ -1,8 +1,8 @@
-import { type SelectBurger } from "~/server/db/schema";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Rating } from "./Rating";
 import Image from "next/image";
 import { shimmer, toBase64 } from "~/lib/utils";
+import { type SelectBurger } from "~/server/db/types";
 
 type ResturantCardProps = {
   burger: SelectBurger;
