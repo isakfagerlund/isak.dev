@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "./ui/button";
 import { ResturantCard } from "./ResturantCard";
 import {
@@ -13,25 +13,53 @@ import {
 import { X } from "lucide-react";
 import Link from "next/link";
 import { type SelectBurger } from "~/server/db/types";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 export function AllResturants({
   burgers,
   allCountries,
+  searchParamCountry,
 }: {
   burgers: SelectBurger[];
   allCountries: string[];
+  searchParamCountry: string | undefined;
 }) {
-  const [filteredBurgers, setFilteredBurgers] = useState(burgers);
-  const [country, setCountry] = useState<string | undefined>(undefined);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [filteredBurgers, setFilteredBurgers] = useState(
+    burgers.filter((burger) =>
+      searchParamCountry ? burger.country === searchParamCountry : true,
+    ),
+  );
+  const [country, setCountry] = useState<string | undefined>(
+    searchParamCountry,
+  );
   const [isFiltered, setisFiltered] = useState(false);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   const filterByCountry = (value: string) => {
     setCountry(value);
-    setFilteredBurgers(burgers.filter((burger) => burger.country === value));
-    if (isFiltered) {
-      setisFiltered(false);
-    } else {
-      setisFiltered(true);
+    const onlyCountryName = value.split(" ")[0];
+    if (onlyCountryName) {
+      router.push(
+        pathname + "?" + createQueryString("country", onlyCountryName),
+      );
+      setFilteredBurgers(burgers.filter((burger) => burger.country === value));
+      if (isFiltered) {
+        setisFiltered(false);
+      } else {
+        setisFiltered(true);
+      }
     }
   };
 
@@ -62,6 +90,7 @@ export function AllResturants({
             onClick={() => {
               setFilteredBurgers(burgers);
               setCountry(undefined);
+              router.push(pathname);
             }}
             variant="outline"
             size="icon"
