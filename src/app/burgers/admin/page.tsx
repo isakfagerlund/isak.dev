@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { api } from "~/trpc/server";
+import { AddBurger } from "./AddBurger";
 
 export default async function BurgersAdmin() {
   const { sessionClaims } = auth();
@@ -13,7 +14,8 @@ export default async function BurgersAdmin() {
   }
 
   return (
-    <div>
+    <div className="pb-2">
+      <AddBurger />
       <DataTable columns={columns} data={allBurgers} />
     </div>
   );

@@ -4,7 +4,6 @@
 import { Button } from "~/app/_components/ui/button";
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "~/app/_components/ui/dialog";
@@ -23,7 +22,7 @@ import {
 } from "~/app/_components/ui/form";
 import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
-import { InsertBurgerSchema, cn } from "~/lib/utils";
+import { UpdateBurgerSchema, cn } from "~/lib/utils";
 import { CircleXIcon } from "lucide-react";
 import { type Dispatch, type SetStateAction } from "react";
 import { type SelectBurger } from "~/server/db/types";
@@ -36,8 +35,8 @@ export function EditBurger({
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const router = useRouter();
-  const form = useForm<z.infer<typeof InsertBurgerSchema>>({
-    resolver: zodResolver(InsertBurgerSchema),
+  const form = useForm<z.infer<typeof UpdateBurgerSchema>>({
+    resolver: zodResolver(UpdateBurgerSchema),
     defaultValues: { ...burger, rating: burger.rating?.toString() },
   });
 
@@ -54,17 +53,14 @@ export function EditBurger({
     },
   });
 
-  function handleSubmit(values: z.infer<typeof InsertBurgerSchema>) {
+  function handleSubmit(values: z.infer<typeof UpdateBurgerSchema>) {
     mutate(values);
   }
 
   return (
     <DialogContent className="max-h-[95%] overflow-y-scroll sm:max-h-[80%] sm:max-w-[625px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
-        <DialogDescription>
-          Make changes to your profile here. Click save when youre done.
-        </DialogDescription>
+        <DialogTitle>Edit Resturant</DialogTitle>
       </DialogHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

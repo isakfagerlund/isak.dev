@@ -25,11 +25,21 @@ export const toBase64 = (str: string) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
-export const InsertBurgerSchema = z.object({
+export const UpdateBurgerSchema = z.object({
   id: z.number(),
-  resturantName: z.string().min(2).nullable(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
+  resturantName: z.string().min(2).nullable(),
+  rating: z.string().nullable(),
+  description: z.string().nullable(),
+  city: z.string().nullable(),
+  country: z.string().nullable(),
+  images: z.array(z.string().url()).nullable(),
+  address: z.string().nullable(),
+});
+
+export const InsertBurgerSchema = z.object({
+  resturantName: z.string().min(2).nullable(),
   rating: z.string().nullable(),
   description: z.string().nullable(),
   city: z.string().nullable(),

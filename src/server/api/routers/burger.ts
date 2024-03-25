@@ -1,6 +1,10 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { InsertBurgerSchema } from "~/lib/utils";
+import {
+  UpdateBurgerSchema,
+  InsertBurgerSchema,
+  SelectBurgerSchema,
+} from "~/lib/utils";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { burgers } from "~/server/db/schema";
 import { type InsertBurger } from "~/server/db/types";
@@ -30,7 +34,7 @@ export const burgerRouter = createTRPCRouter({
   }),
 
   updateBurger: publicProcedure
-    .input(InsertBurgerSchema)
+    .input(UpdateBurgerSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db
         .update(burgers)
@@ -42,5 +46,11 @@ export const burgerRouter = createTRPCRouter({
     .input(InsertBurgerSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db.insert(burgers).values(input as InsertBurger);
+    }),
+
+  deleteBurger: publicProcedure
+    .input(SelectBurgerSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.db.delete(burgers).where(eq(burgers.id, input.id));
     }),
 });
