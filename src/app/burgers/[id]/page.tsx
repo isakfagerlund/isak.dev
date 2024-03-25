@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Rating } from "~/app/_components/Rating";
+
 import { api } from "~/trpc/server";
+import { MapButton } from "./_components/MapButton";
 
 export default async function Burger({ params }: { params: { id: string } }) {
   const burger = await api.burger.getById({ id: params.id });
@@ -20,7 +22,10 @@ export default async function Burger({ params }: { params: { id: string } }) {
         <h1 className="scroll-m-20 pb-3 text-4xl font-extrabold lowercase tracking-tight lg:text-5xl">
           {burger.resturantName}
         </h1>
-        <Rating rating={burger.rating ?? 0} />
+        <div className="flex w-full justify-between gap-2">
+          <Rating rating={burger.rating ?? 0} />
+          <MapButton burger={burger} />
+        </div>
         <p className="mt-3 pb-2 leading-7">
           {burger.description ?? "Review coming soon"}
         </p>

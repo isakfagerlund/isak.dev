@@ -115,10 +115,23 @@ export function EditBurger({
           />
           <FormField
             control={form.control}
-            name="city"
+            name="address"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input {...field} value={field.value ?? ""} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
                 <FormControl>
                   <Input {...field} value={field.value ?? ""} />
                 </FormControl>
