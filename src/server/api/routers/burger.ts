@@ -33,6 +33,10 @@ export const burgerRouter = createTRPCRouter({
     return ctx.db.select().from(burgers);
   }),
 
+  getAllPublished: publicProcedure.query(({ ctx }) => {
+    return ctx.db.select().from(burgers).where(eq(burgers.isPublished, true));
+  }),
+
   updateBurger: publicProcedure
     .input(UpdateBurgerSchema)
     .mutation(({ ctx, input }) => {

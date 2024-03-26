@@ -36,6 +36,7 @@ export const UpdateBurgerSchema = z.object({
   country: z.string().nullable(),
   images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
+  isPublished: z.boolean().nullable(),
 });
 
 export const InsertBurgerSchema = z.object({
@@ -59,4 +60,5 @@ export const SelectBurgerSchema = z.object({
   country: z.string().nullable(),
   images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
+  isPublished: z.boolean().nullable(),
 });

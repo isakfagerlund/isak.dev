@@ -2,7 +2,12 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { sql } from "drizzle-orm";
-import { int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import {
+  int,
+  integer,
+  sqliteTableCreator,
+  text,
+} from "drizzle-orm/sqlite-core";
 import type { FoodTested, Image } from "./types";
 
 /**
@@ -27,4 +32,5 @@ export const burgers = createTable("burger", {
   testedFood: text("tested_food", { mode: "json" }).$type<FoodTested[]>(),
   images: text("images", { mode: "json" }).$type<Image[]>(),
   address: text("address").default("empty address"),
+  isPublished: integer("isPublished", { mode: "boolean" }),
 });
