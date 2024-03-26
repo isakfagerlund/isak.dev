@@ -26,6 +26,7 @@ import { UpdateBurgerSchema, cn } from "~/lib/utils";
 import { CircleXIcon } from "lucide-react";
 import { type Dispatch, type SetStateAction } from "react";
 import { type SelectBurger } from "~/server/db/types";
+import { Checkbox } from "~/app/_components/ui/checkbox";
 
 export function EditBurger({
   burger,
@@ -143,6 +144,22 @@ export function EditBurger({
                 <FormLabel>Country</FormLabel>
                 <FormControl>
                   <Input {...field} value={field.value ?? ""} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isPublished"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormLabel className="cursor-pointer">Is Published</FormLabel>
+                <FormControl>
+                  <Checkbox
+                    onCheckedChange={field.onChange}
+                    checked={field.value ?? false}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

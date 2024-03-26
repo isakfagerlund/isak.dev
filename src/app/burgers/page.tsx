@@ -6,7 +6,7 @@ export default async function Burgers({
 }: {
   searchParams: { country: string | undefined };
 }) {
-  const allBurgers = await api.burger.getAll();
+  const allBurgers = await api.burger.getAllPublished();
   const allCountries = allBurgers.map((burger) => burger.country);
   const allCountriesUnique = [...new Set(allCountries)].filter(
     Boolean,
