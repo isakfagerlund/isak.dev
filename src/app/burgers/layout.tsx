@@ -1,4 +1,11 @@
 import Link from "next/link";
+import { type Metadata } from "next/types";
+
+export const metadata = {
+  title: "isak.dev - burgers",
+  description: "Isak Fagerlund - Favorite Burgers",
+  icons: [{ rel: "icon", url: "/sparkles.svg" }],
+} satisfies Metadata;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
