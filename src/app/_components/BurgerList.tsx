@@ -72,14 +72,14 @@ export function AllResturants({
           onValueChange={(value) => filterByCountry(value)}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Country" />
+            <SelectValue placeholder="country" />
           </SelectTrigger>
           <SelectContent>
             {allCountries?.map(
               (country) =>
                 country && (
                   <SelectItem key={country} value={country}>
-                    {country}
+                    {country.toLocaleLowerCase()}
                   </SelectItem>
                 ),
             )}

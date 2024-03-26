@@ -13,7 +13,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="m-auto flex h-[calc(100vh-72px)] max-w-[600px] flex-col gap-6 pb-3">
+    <div className="m-auto flex h-[calc(100vh-72px)] max-w-[600px] flex-col gap-6 pb-3 pt-6">
       <section>
         <p className="lowercase text-slate-500">
           {burger.country?.split(" ")[0]}, {burger.city}{" "}
