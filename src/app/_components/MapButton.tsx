@@ -7,9 +7,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "~/app/_components/ui/dropdown-menu";
-import { type SelectBurger } from "~/server/db/types";
 
-export const MapButton = ({ burger }: { burger: SelectBurger }) => (
+export const MapButton = ({
+  name,
+  address,
+  city,
+}: {
+  name: string | null;
+  address: string | null;
+  city: string | null;
+}) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="ghost">
@@ -21,7 +28,7 @@ export const MapButton = ({ burger }: { burger: SelectBurger }) => (
 
       <DropdownMenuItem asChild>
         <a
-          href={`https://www.google.com/maps/search/?api=1&query=${burger.resturantName}+${burger.address}+${burger.city}`}
+          href={`https://www.google.com/maps/search/?api=1&query=${name}+${address}+${city}`}
           target="_blank"
           className="cursor-pointer"
         >
@@ -30,7 +37,7 @@ export const MapButton = ({ burger }: { burger: SelectBurger }) => (
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
         <a
-          href={`https://maps.apple.com/?q=${burger.resturantName}+${burger.address}+${burger.city}`}
+          href={`https://maps.apple.com/?q=${name}+${address}+${city}`}
           target="_blank"
           className="cursor-pointer"
         >

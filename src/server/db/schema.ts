@@ -34,3 +34,15 @@ export const burgers = createTable("burger", {
   address: text("address").default("empty address"),
   isPublished: integer("isPublished", { mode: "boolean" }),
 });
+
+export const cafes = createTable("cafes", {
+  id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  cafeName: text("cafe_name", { length: 256 }),
+  description: text("description"),
+  city: text("city"),
+  country: text("country", { length: 256 }),
+  images: text("images", { mode: "json" }).$type<Image[]>(),
+  address: text("address").default("empty address"),
+  price: text("price"),
+  isPublished: integer("isPublished", { mode: "boolean" }),
+});
