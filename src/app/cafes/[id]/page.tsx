@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MapButton } from "~/app/_components/MapButton";
+import { createImageUrlFromObjectKey } from "~/lib/utils";
 
 import { api } from "~/trpc/server";
 
 export default async function Burger({ params }: { params: { id: string } }) {
   const cafe = await api.cafes.getById({ id: params.id });
+  const response = await fetch(`http://localhost:3000/api/images/${params.id}`);
+  const images = (await response.json()) as { Key: string }[];
 
   if (!cafe) {
     return notFound();
@@ -34,17 +37,17 @@ export default async function Burger({ params }: { params: { id: string } }) {
           {cafe.description ?? "Review coming soon"}
         </p>
       </section>
-      {cafe.images?.map((image) => (
+      {images?.map((image) => (
         <Image
-          key={image}
+          key={image.Key}
           priority
           className="h-[300px] w-full rounded-lg border border-slate-100 object-cover"
           alt="burger"
-          src={image}
+          src={createImageUrlFromObjectKey(image.Key)}
           width={500}
           height={500}
         />
-      ))}
+      )) ?? <p>No images yet</p>}
     </div>
   );
 }
