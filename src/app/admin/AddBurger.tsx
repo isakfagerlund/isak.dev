@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 "use client";
 import { Button } from "~/app/_components/ui/button";
 import {
@@ -47,7 +45,8 @@ export function AddBurger() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div className="flex w-full justify-end py-2">
+      <div className="flex w-full justify-between py-2">
+        <h3 className="text-xl font-bold">Burger Resturants</h3>
         <Button onClick={() => setOpen(true)}>Add new Burger</Button>
       </div>
       <DialogContent className="max-h-[95%] overflow-y-scroll sm:max-h-[80%] sm:max-w-[625px]">

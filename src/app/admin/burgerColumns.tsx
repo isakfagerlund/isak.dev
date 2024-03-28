@@ -4,7 +4,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { EditDropdown } from "./EditDropdown";
 import { type SelectBurger } from "~/server/db/types";
 
-export const columns: ColumnDef<SelectBurger>[] = [
+export const burgerColumns: ColumnDef<SelectBurger>[] = [
   {
     accessorKey: "id",
     header: "Id",

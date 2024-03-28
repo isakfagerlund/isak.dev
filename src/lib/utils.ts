@@ -63,3 +63,12 @@ export const SelectBurgerSchema = z.object({
   address: z.string().nullable(),
   isPublished: z.boolean().nullable(),
 });
+
+export const InsertCafeSchema = z.object({
+  cafeName: z.string().min(2).nullable(),
+  description: z.string().nullable(),
+  city: z.string().nullable(),
+  country: z.string().nullable(),
+  address: z.string().nullable(),
+  price: z.string().nullable(),
+});
