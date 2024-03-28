@@ -1,5 +1,5 @@
 "use client";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       >
         <header className="flex justify-between py-2">
           <h2>Admin page</h2>
-          {/* <UserButton /> */}
+          <UserButton />
         </header>
         {children}
       </ClerkProvider>

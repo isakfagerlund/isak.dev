@@ -19,15 +19,17 @@ import {
   FormLabel,
   FormMessage,
 } from "~/app/_components/ui/form";
-import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
 import { InsertBurgerSchema } from "~/lib/utils";
 import { useState } from "react";
 
-export function AddBurger() {
+export function AddBurger({
+  refetchBurgers,
+}: {
+  refetchBurgers: () => unknown;
+}) {
   const [open, setOpen] = useState(false);
 
-  const router = useRouter();
   const form = useForm<z.infer<typeof InsertBurgerSchema>>({
     resolver: zodResolver(InsertBurgerSchema),
   });
@@ -35,7 +37,7 @@ export function AddBurger() {
   const { mutate } = api.burger.addBurger.useMutation({
     onSuccess: () => {
       setOpen(false);
-      router.refresh();
+      refetchBurgers();
     },
   });
 

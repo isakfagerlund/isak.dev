@@ -19,15 +19,12 @@ import {
   FormLabel,
   FormMessage,
 } from "~/app/_components/ui/form";
-import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
 import { InsertCafeSchema } from "~/lib/utils";
 import { useState } from "react";
 
-export function AddCafe() {
+export function AddCafe({ refetchCafes }: { refetchCafes: () => unknown }) {
   const [open, setOpen] = useState(false);
-
-  const router = useRouter();
   const form = useForm<z.infer<typeof InsertCafeSchema>>({
     resolver: zodResolver(InsertCafeSchema),
   });
@@ -35,7 +32,7 @@ export function AddCafe() {
   const { mutate } = api.cafes.addCafe.useMutation({
     onSuccess: () => {
       setOpen(false);
-      router.refresh();
+      refetchCafes();
     },
   });
 

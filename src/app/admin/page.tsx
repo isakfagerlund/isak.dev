@@ -7,19 +7,20 @@ import { cafeColumns } from "./cafeColumns";
 import { api } from "~/trpc/react";
 
 export default function BurgersAdmin() {
-  const allBurgers = api.burger.getAll.useQuery();
-  const allCafes = api.cafes.getAll.useQuery();
+  const { data: allBurgers, refetch: refetchBurgers } =
+    api.burger.getAll.useQuery();
+  const { data: allCafes, refetch: refetchCafes } = api.cafes.getAll.useQuery();
 
-  if (!allBurgers.data || !allCafes.data) {
+  if (!allBurgers || !allCafes) {
     return null;
   }
 
   return (
     <div className="flex flex-col gap-3 pb-2">
-      <AddBurger />
-      <DataTable columns={burgerColumns} data={allBurgers.data} />
-      <AddCafe />
-      <DataTable columns={cafeColumns} data={allCafes.data} />
+      <AddBurger refetchBurgers={refetchBurgers} />
+      <DataTable columns={burgerColumns} data={allBurgers} />
+      <AddCafe refetchCafes={refetchCafes} />
+      <DataTable columns={cafeColumns} data={allCafes} />
     </div>
   );
 }
