@@ -10,7 +10,7 @@ type ResturantCardProps = {
   images: _Object[] | undefined;
 };
 
-export const ResturantCard = async ({ burger, images }: ResturantCardProps) => {
+export const ResturantCard = ({ burger, images }: ResturantCardProps) => {
   const resturantImages = images?.filter((image) =>
     image.Key?.includes(`burgers/${burger.id}/`),
   );

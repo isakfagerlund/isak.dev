@@ -38,7 +38,6 @@ export const UpdateBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
   isPublished: z.boolean().nullable(),
 });
@@ -49,7 +48,6 @@ export const InsertBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
 });
 
@@ -62,7 +60,6 @@ export const SelectBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
   isPublished: z.boolean().nullable(),
 });
