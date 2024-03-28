@@ -1,14 +1,17 @@
+import { ListObjectsCommand } from "@aws-sdk/client-s3";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MapButton } from "~/app/_components/MapButton";
 import { createImageUrlFromObjectKey } from "~/lib/utils";
+import { S3Bucket, s3 } from "~/server/s3/client";
 
 import { api } from "~/trpc/server";
 
-export default async function Burger({ params }: { params: { id: string } }) {
+export default async function Cafe({ params }: { params: { id: string } }) {
   const cafe = await api.cafes.getById({ id: params.id });
-  const response = await fetch(`http://localhost:3000/api/images/${params.id}`);
-  const images = (await response.json()) as { Key: string }[];
+  const { Contents: images } = await s3.send(
+    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes/${params.id}` }),
+  );
 
   if (!cafe) {
     return notFound();
@@ -43,7 +46,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
           priority
           className="h-[300px] w-full rounded-lg border border-slate-100 object-cover"
           alt="burger"
-          src={createImageUrlFromObjectKey(image.Key)}
+          src={createImageUrlFromObjectKey(image.Key ?? "")}
           width={500}
           height={500}
         />

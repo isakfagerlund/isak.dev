@@ -6,15 +6,18 @@ import Link from "next/link";
 import { type SelectBurger } from "~/server/db/types";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { CountrySelect } from "./CountrySelect";
+import { type _Object } from "@aws-sdk/client-s3";
 
 export function AllResturants({
   burgers,
   allCountries,
   searchParamCountry,
+  images,
 }: {
   burgers: SelectBurger[];
   allCountries: string[];
   searchParamCountry: string | undefined;
+  images: _Object[] | undefined;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -75,7 +78,7 @@ export function AllResturants({
         <div className="grid h-full w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredBurgers.map((burger) => (
             <Link key={burger.id} href={`/burgers/${burger.id}`}>
-              <ResturantCard burger={burger} />
+              <ResturantCard burger={burger} images={images} />
             </Link>
           ))}
         </div>
