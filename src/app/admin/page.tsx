@@ -1,27 +1,25 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+"use client";
 import { DataTable } from "./data-table";
-import { api } from "~/trpc/server";
 import { AddBurger } from "./AddBurger";
 import { AddCafe } from "./AddCafe";
 import { burgerColumns } from "./burgerColumns";
 import { cafeColumns } from "./cafeColumns";
+import { api } from "~/trpc/react";
 
-export default async function BurgersAdmin() {
-  const { sessionClaims } = auth();
-  const allBurgers = await api.burger.getAll();
-  const allCafes = await api.cafes.getAll();
+export default function BurgersAdmin() {
+  const allBurgers = api.burger.getAll.useQuery();
+  const allCafes = api.cafes.getAll.useQuery();
 
-  if (sessionClaims?.metadata.role !== "admin") {
-    redirect("/");
+  if (!allBurgers.data || !allCafes.data) {
+    return null;
   }
 
   return (
     <div className="flex flex-col gap-3 pb-2">
       <AddBurger />
-      <DataTable columns={burgerColumns} data={allBurgers} />
+      <DataTable columns={burgerColumns} data={allBurgers.data} />
       <AddCafe />
-      <DataTable columns={cafeColumns} data={allCafes} />
+      <DataTable columns={cafeColumns} data={allCafes.data} />
     </div>
   );
 }

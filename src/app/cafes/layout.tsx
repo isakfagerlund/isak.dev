@@ -13,6 +13,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Link href="/cafes">
         <h1 className="pt-6 text-xl lowercase">Isak&apos;s cafe list</h1>
       </Link>
+      <p className="pb-6 font-light lowercase text-slate-500">
+        my personal recommendations if you need to find a great cup of coffee.
+      </p>
       {children}
     </>
   );

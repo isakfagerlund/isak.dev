@@ -2,6 +2,7 @@ import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
   publicRoutes: (req) => !req.url.includes("/admin"),
+  ignoredRoutes: ["/admin/sign-in"],
 });
 
 export const config = {

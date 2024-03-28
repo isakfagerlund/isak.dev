@@ -25,10 +25,6 @@ export default async function Burgers({
 
   return (
     <>
-      <p className="pb-6 font-light lowercase text-slate-500">
-        These are all my biased opinions based on nothing more than taste, vibes
-        and experience. 
-      </p>
       <AllResturants
         burgers={allBurgers}
         allCountries={allCountriesUnique}
