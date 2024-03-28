@@ -2,6 +2,10 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 
+export function createImageUrlFromObjectKey(key: string) {
+  return `https://pub-58ed107eae4b426d8f549f5b11283f63.r2.dev/${key}`;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -34,7 +38,6 @@ export const UpdateBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
   isPublished: z.boolean().nullable(),
 });
@@ -45,7 +48,6 @@ export const InsertBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
 });
 
@@ -58,7 +60,6 @@ export const SelectBurgerSchema = z.object({
   description: z.string().nullable(),
   city: z.string().nullable(),
   country: z.string().nullable(),
-  images: z.array(z.string().url()).nullable(),
   address: z.string().nullable(),
   isPublished: z.boolean().nullable(),
 });

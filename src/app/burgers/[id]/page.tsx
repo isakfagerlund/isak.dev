@@ -1,12 +1,21 @@
+import { ListObjectsCommand } from "@aws-sdk/client-s3";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MapButton } from "~/app/_components/MapButton";
 import { Rating } from "~/app/_components/Rating";
+import { createImageUrlFromObjectKey } from "~/lib/utils";
+import { S3Bucket, s3 } from "~/server/s3/client";
 
 import { api } from "~/trpc/server";
 
 export default async function Burger({ params }: { params: { id: string } }) {
   const burger = await api.burger.getById({ id: params.id });
+  const { Contents: images } = await s3.send(
+    new ListObjectsCommand({
+      Bucket: S3Bucket,
+      Prefix: `burgers/${params.id}`,
+    }),
+  );
 
   if (!burger) {
     return notFound();
@@ -34,13 +43,13 @@ export default async function Burger({ params }: { params: { id: string } }) {
           {burger.description ?? "Review coming soon"}
         </p>
       </section>
-      {burger.images?.map((image) => (
+      {images?.map((image) => (
         <Image
-          key={image}
+          key={image.Key}
           priority
           className="h-[300px] w-full rounded-lg border border-slate-100 object-cover"
           alt="burger"
-          src={image}
+          src={createImageUrlFromObjectKey(image.Key ?? "")}
           width={500}
           height={500}
         />

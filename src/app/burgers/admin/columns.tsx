@@ -22,14 +22,6 @@ export const columns: ColumnDef<SelectBurger>[] = [
     },
   },
   {
-    accessorKey: "images",
-    header: "Images",
-    cell: ({ row }) => {
-      const images: string = row.getValue("images");
-      return <div className="max-w-xs truncate">{images}</div>;
-    },
-  },
-  {
     accessorKey: "testedFood",
     header: "Tested Food",
   },

@@ -11,7 +11,7 @@ import {
 import { Input } from "~/app/_components/ui/input";
 import { api } from "~/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import {
   Form,
@@ -23,8 +23,7 @@ import {
 } from "~/app/_components/ui/form";
 import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
-import { InsertBurgerSchema, cn } from "~/lib/utils";
-import { CircleXIcon } from "lucide-react";
+import { InsertBurgerSchema } from "~/lib/utils";
 import { useState } from "react";
 
 export function AddBurger() {
@@ -33,12 +32,6 @@ export function AddBurger() {
   const router = useRouter();
   const form = useForm<z.infer<typeof InsertBurgerSchema>>({
     resolver: zodResolver(InsertBurgerSchema),
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    // @ts-expect-error you are suppose to use array of objects, but this still works
-    name: "images",
   });
 
   const { mutate } = api.burger.addBurger.useMutation({
@@ -150,50 +143,6 @@ export function AddBurger() {
                 </FormItem>
               )}
             />
-            <div>
-              {fields.map((field, index) => (
-                <div key={field.id}>
-                  <FormField
-                    control={form.control}
-                    name={`images.${index}`}
-                    render={({ field }) => (
-                      <div className="flex items-center gap-4">
-                        <FormItem className="w-full">
-                          <FormLabel className={cn(index !== 0 && "sr-only")}>
-                            Images
-                          </FormLabel>
-                          <FormControl>
-                            <Textarea {...field} value={field?.value ?? ""} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                        <img
-                          alt=""
-                          className="h-full w-[50px] object-cover"
-                          src={field.value}
-                        />
-                        <Button
-                          variant="destructive"
-                          type="button"
-                          onClick={() => remove(index)}
-                        >
-                          <CircleXIcon className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )}
-                  />
-                </div>
-              ))}
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="mt-2"
-                onClick={() => append("")}
-              >
-                Add Image url
-              </Button>
-            </div>
             <Button type="submit">Submit</Button>
           </form>
         </Form>

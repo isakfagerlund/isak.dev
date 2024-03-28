@@ -6,15 +6,18 @@ import { type SelectCafe } from "~/server/db/types";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { CountrySelect } from "./CountrySelect";
 import { CafeCard } from "./CafeCard";
+import { type _Object } from "@aws-sdk/client-s3";
 
 export function CafeList({
   cafes,
   allCountries,
   searchParamCountry,
+  images,
 }: {
   cafes: SelectCafe[];
   allCountries: string[];
   searchParamCountry: string | undefined;
+  images: _Object[] | undefined;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -75,7 +78,7 @@ export function CafeList({
         <div className="grid h-full w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredCafes.map((cafe) => (
             <Link key={cafe.id} href={`/cafes/${cafe.id}`}>
-              <CafeCard cafe={cafe} />
+              <CafeCard cafe={cafe} images={images} />
             </Link>
           ))}
         </div>
