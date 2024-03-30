@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BackButton } from "~/app/_components/BackButton";
 import { MapButton } from "~/app/_components/MapButton";
 import { Rating } from "~/app/_components/Rating";
-import { createImageUrlFromObjectKey } from "~/lib/utils";
+import { createImageUrlFromObjectKey, sortS3ImagesByDate } from "~/lib/utils";
 import { S3Bucket, s3 } from "~/server/s3/client";
 
 import { api } from "~/trpc/server";
@@ -17,6 +17,8 @@ export default async function Burger({ params }: { params: { id: string } }) {
       Prefix: `burgers/${params.id}`,
     }),
   );
+
+  const sortedImages = sortS3ImagesByDate(images);
 
   if (!burger) {
     return notFound();
@@ -46,7 +48,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
             {burger.description ?? "Review coming soon"}
           </p>
         </section>
-        {images?.map((image) => (
+        {sortedImages?.map((image) => (
           <Image
             key={image.Key}
             priority

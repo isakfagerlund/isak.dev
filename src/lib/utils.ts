@@ -1,3 +1,4 @@
+import { type _Object } from "@aws-sdk/client-s3";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
@@ -72,3 +73,12 @@ export const InsertCafeSchema = z.object({
   address: z.string().nullable(),
   price: z.string().nullable(),
 });
+
+export const sortS3ImagesByDate = (images: _Object[] | undefined) =>
+  images?.sort((image1, image2) => {
+    if (image1.LastModified && image2.LastModified) {
+      return image1.LastModified.getTime() - image2.LastModified.getTime();
+    } else {
+      return 0;
+    }
+  });

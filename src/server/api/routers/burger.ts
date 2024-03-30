@@ -1,5 +1,11 @@
+import {
+  DeleteObjectCommand,
+  ListObjectsCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import sharp from "sharp";
 import {
   UpdateBurgerSchema,
   InsertBurgerSchema,
@@ -8,15 +14,47 @@ import {
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { burgers } from "~/server/db/schema";
 import { type InsertBurger } from "~/server/db/types";
+import { S3Bucket, s3 } from "~/server/s3/client";
 
 export const burgerRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  postImage: publicProcedure
+    .input(z.object({ file: z.any(), burgerId: z.number() }))
+    .mutation(async ({ input }) => {
+      const data = await sharp(input.file as Uint8Array)
+        .resize({ width: 800 })
+        .toFormat("webp")
+        .toBuffer();
+
+      await s3.send(
+        new PutObjectCommand({
+          Bucket: S3Bucket,
+          Key: `burgers/${input.burgerId}/${crypto.randomUUID()}.png`,
+          Body: data,
+        }),
+      );
     }),
+
+  getImages: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ input }) => {
+      const { Contents: images } = await s3.send(
+        new ListObjectsCommand({
+          Bucket: S3Bucket,
+          Prefix: `burgers/${input.id}`,
+        }),
+      );
+
+      return images;
+    }),
+
+  deleteImage: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    await s3.send(
+      new DeleteObjectCommand({
+        Bucket: S3Bucket,
+        Key: input,
+      }),
+    );
+  }),
 
   getById: publicProcedure
     .input(z.object({ id: z.string() }))

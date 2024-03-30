@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button } from "~/app/_components/ui/button";
 import {
@@ -21,9 +22,15 @@ import {
 import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
 import { UpdateBurgerSchema } from "~/lib/utils";
-import { type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { type SelectBurger } from "~/server/db/types";
 import { Checkbox } from "~/app/_components/ui/checkbox";
+import { ImageUploader } from "../_components/ImageUploader";
 
 export function EditBurger({
   burger,
@@ -32,6 +39,20 @@ export function EditBurger({
   burger: SelectBurger;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const [fileToUpload, setFileToUpload] = useState<Uint8Array>();
+  const { data: images, refetch } = api.burger.getImages.useQuery({
+    id: burger.id,
+  });
+  const { mutate: postImage, isPending } = api.burger.postImage.useMutation({
+    onSuccess: () => {
+      setFileToUpload(undefined);
+      return refetch();
+    },
+  });
+  const { mutate: deleteImage, isPending: deletingPending } =
+    api.burger.deleteImage.useMutation({
+      onSuccess: () => refetch(),
+    });
   const router = useRouter();
   const form = useForm<z.infer<typeof UpdateBurgerSchema>>({
     resolver: zodResolver(UpdateBurgerSchema),
@@ -47,6 +68,18 @@ export function EditBurger({
 
   function handleSubmit(values: z.infer<typeof UpdateBurgerSchema>) {
     mutate(values);
+  }
+
+  async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
+    if (event?.target?.files?.[0]) {
+      const file = event?.target?.files?.[0];
+      const arrayBuffer = await file.arrayBuffer();
+      setFileToUpload(new Uint8Array(arrayBuffer));
+    }
+  }
+
+  function handleFileUpload() {
+    postImage({ file: fileToUpload, burgerId: burger.id });
   }
 
   return (
@@ -155,6 +188,15 @@ export function EditBurger({
                 <FormMessage />
               </FormItem>
             )}
+          />
+          <ImageUploader
+            images={images}
+            deleteImage={deleteImage}
+            deletingPending={deletingPending}
+            handleFileChange={handleFileChange}
+            isPending={isPending}
+            handleFileUpload={handleFileUpload}
+            fileToUpload={fileToUpload}
           />
           <Button type="submit">Submit</Button>
         </form>

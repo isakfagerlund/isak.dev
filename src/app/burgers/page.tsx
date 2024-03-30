@@ -2,6 +2,7 @@ import { api } from "~/trpc/server";
 import { AllResturants } from "../_components/BurgerList";
 import { S3Bucket, s3 } from "~/server/s3/client";
 import { ListObjectsCommand } from "@aws-sdk/client-s3";
+import { sortS3ImagesByDate } from "~/lib/utils";
 
 export default async function Burgers({
   searchParams,
@@ -33,7 +34,7 @@ export default async function Burgers({
         burgers={allBurgers}
         allCountries={allCountriesUnique}
         searchParamCountry={countryWithEmojji}
-        images={images}
+        images={sortS3ImagesByDate(images)}
       />
     </>
   );
