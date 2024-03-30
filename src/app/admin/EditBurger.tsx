@@ -21,7 +21,7 @@ import {
 } from "~/app/_components/ui/form";
 import { useRouter } from "next/navigation";
 import { Textarea } from "~/app/_components/ui/textarea";
-import { UpdateBurgerSchema } from "~/lib/utils";
+import { UpdateBurgerSchema, resizeImage } from "~/lib/utils";
 import {
   useState,
   type ChangeEvent,
@@ -31,6 +31,7 @@ import {
 import { type SelectBurger } from "~/server/db/types";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import { ImageUploader } from "../_components/ImageUploader";
+import { useToast } from "../_components/ui/use-toast";
 
 export function EditBurger({
   burger,
@@ -39,11 +40,18 @@ export function EditBurger({
   burger: SelectBurger;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { toast } = useToast();
   const [fileToUpload, setFileToUpload] = useState<Uint8Array>();
   const { data: images, refetch } = api.burger.getImages.useQuery({
     id: burger.id,
   });
   const { mutate: postImage, isPending } = api.burger.postImage.useMutation({
+    onError: (error) =>
+      toast({
+        title: "Image upload failed",
+        description: error.message,
+        variant: "destructive",
+      }),
     onSuccess: () => {
       setFileToUpload(undefined);
       return refetch();
@@ -73,7 +81,8 @@ export function EditBurger({
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     if (event?.target?.files?.[0]) {
       const file = event?.target?.files?.[0];
-      const arrayBuffer = await file.arrayBuffer();
+      const blob = await resizeImage(file);
+      const arrayBuffer = await blob.arrayBuffer();
       setFileToUpload(new Uint8Array(arrayBuffer));
     }
   }
