@@ -25,6 +25,9 @@ export default async function Cafes({
 
   return (
     <>
+      <p className="pb-6 font-light lowercase text-slate-500">
+        my personal recommendations if you need to find a great cup of coffee.
+      </p>
       <CafeList
         cafes={allCafes}
         allCountries={allCountriesUnique}
