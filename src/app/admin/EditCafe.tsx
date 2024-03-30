@@ -31,6 +31,30 @@ import {
 import { type SelectCafe } from "~/server/db/types";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import { ImageUploader } from "../_components/ImageUploader";
+import pica from "pica";
+
+const picaInstance = pica();
+
+const resizeImage = async (file: File) => {
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
+
+  await img.decode();
+
+  const canvas = document.createElement("canvas");
+
+  canvas.width = 800;
+  canvas.height = (img.height / img.width) * canvas.width; // maintain aspect ratio
+
+  // Resize the image with Pica
+  const blob = await picaInstance
+    .resize(img, canvas)
+    .then((result) => picaInstance.toBlob(result, "image/jpeg", 0.9))
+    .then((blob) => {
+      return blob;
+    });
+  return blob;
+};
 
 export function EditCafe({
   cafe,
@@ -73,7 +97,9 @@ export function EditCafe({
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     if (event?.target?.files?.[0]) {
       const file = event?.target?.files?.[0];
-      const arrayBuffer = await file.arrayBuffer();
+      // const arrayBuffer = await file.arrayBuffer();
+      const blob = await resizeImage(file);
+      const arrayBuffer = await blob.arrayBuffer();
       setFileToUpload(new Uint8Array(arrayBuffer));
     }
   }
