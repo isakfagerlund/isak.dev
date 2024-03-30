@@ -2,6 +2,7 @@ import { api } from "~/trpc/server";
 import { CafeList } from "../_components/CafeList";
 import { S3Bucket, s3 } from "~/server/s3/client";
 import { ListObjectsCommand } from "@aws-sdk/client-s3";
+import { sortS3ImagesByDate } from "~/lib/utils";
 
 export default async function Cafes({
   searchParams,
@@ -32,7 +33,7 @@ export default async function Cafes({
         cafes={allCafes}
         allCountries={allCountriesUnique}
         searchParamCountry={countryWithEmojji}
-        images={images}
+        images={sortS3ImagesByDate(images)}
       />
     </>
   );

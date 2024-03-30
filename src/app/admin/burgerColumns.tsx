@@ -1,8 +1,8 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { EditDropdown } from "./EditDropdown";
 import { type SelectBurger } from "~/server/db/types";
+import { EditBurgerDropdown } from "./EditBurgerDropdown";
 
 export const burgerColumns: ColumnDef<SelectBurger>[] = [
   {
@@ -46,7 +46,7 @@ export const burgerColumns: ColumnDef<SelectBurger>[] = [
     cell: ({ row }) => {
       const burger = row.original;
 
-      return <EditDropdown burger={burger} />;
+      return <EditBurgerDropdown burger={burger} />;
     },
   },
 ];

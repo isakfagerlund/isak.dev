@@ -12,10 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/app/_components/ui/dropdown-menu";
-import { EditBurger } from "./EditBurger";
-import { type SelectBurger } from "~/server/db/types";
+import { type SelectCafe } from "~/server/db/types";
+import { EditCafe } from "./EditCafe";
 
-export const EditDropdown = ({ burger }: { burger: SelectBurger }) => {
+export const EditCafeDropdown = ({ cafe }: { cafe: SelectCafe }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,12 +35,12 @@ export const EditDropdown = ({ burger }: { burger: SelectBurger }) => {
               onClick={() => setOpen(true)}
               className="cursor-pointer"
             >
-              Edit Resturant
+              Edit Cafe
             </DropdownMenuItem>
           </DialogTrigger>
         </DropdownMenuContent>
       </DropdownMenu>
-      <EditBurger burger={burger} setOpen={setOpen} />
+      <EditCafe cafe={cafe} setOpen={setOpen} />
     </Dialog>
   );
 };

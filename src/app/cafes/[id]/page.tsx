@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BackButton } from "~/app/_components/BackButton";
 import { MapButton } from "~/app/_components/MapButton";
-import { createImageUrlFromObjectKey } from "~/lib/utils";
+import { createImageUrlFromObjectKey, sortS3ImagesByDate } from "~/lib/utils";
 import { S3Bucket, s3 } from "~/server/s3/client";
 
 import { api } from "~/trpc/server";
@@ -13,6 +13,8 @@ export default async function Cafe({ params }: { params: { id: string } }) {
   const { Contents: images } = await s3.send(
     new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes/${params.id}` }),
   );
+
+  const sortedImages = sortS3ImagesByDate(images);
 
   if (!cafe) {
     return notFound();
@@ -43,7 +45,7 @@ export default async function Cafe({ params }: { params: { id: string } }) {
             {cafe.description ?? "Review coming soon"}
           </p>
         </section>
-        {images?.map((image) => (
+        {sortedImages?.map((image) => (
           <Image
             key={image.Key}
             priority

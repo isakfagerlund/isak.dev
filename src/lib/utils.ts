@@ -74,6 +74,17 @@ export const InsertCafeSchema = z.object({
   price: z.string().nullable(),
 });
 
+export const UpdateCafeSchema = z.object({
+  id: z.number(),
+  cafeName: z.string().min(2).nullable(),
+  description: z.string().nullable(),
+  city: z.string().nullable(),
+  country: z.string().nullable(),
+  address: z.string().nullable(),
+  price: z.string().nullable(),
+  isPublished: z.boolean().nullable(),
+});
+
 export const sortS3ImagesByDate = (images: _Object[] | undefined) =>
   images?.sort((image1, image2) => {
     if (image1.LastModified && image2.LastModified) {

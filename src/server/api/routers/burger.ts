@@ -28,7 +28,7 @@ export const burgerRouter = createTRPCRouter({
       await s3.send(
         new PutObjectCommand({
           Bucket: S3Bucket,
-          Key: `burgers/${input.burgerId}/${crypto.randomUUID()}.png`,
+          Key: `burgers/${input.burgerId}/${crypto.randomUUID()}.webp`,
           Body: data,
         }),
       );
