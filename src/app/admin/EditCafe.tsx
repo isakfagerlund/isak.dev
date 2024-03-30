@@ -32,6 +32,7 @@ import { type SelectCafe } from "~/server/db/types";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import { ImageUploader } from "../_components/ImageUploader";
 import { useToast } from "../_components/ui/use-toast";
+import { RefreshCcwIcon } from "lucide-react";
 
 export function EditCafe({
   cafe,
@@ -67,12 +68,13 @@ export function EditCafe({
     defaultValues: cafe,
   });
 
-  const { mutate } = api.cafes.updateCafe.useMutation({
-    onSuccess: () => {
-      setOpen(false);
-      router.refresh();
-    },
-  });
+  const { mutate, isPending: isUpdatingCafe } =
+    api.cafes.updateCafe.useMutation({
+      onSuccess: () => {
+        setOpen(false);
+        router.refresh();
+      },
+    });
 
   function handleSubmit(values: z.infer<typeof UpdateCafeSchema>) {
     mutate(values);
@@ -188,7 +190,13 @@ export function EditCafe({
             handleFileUpload={handleFileUpload}
             fileToUpload={fileToUpload}
           />
-          <Button type="submit">Submit</Button>
+          <Button disabled={isUpdatingCafe} type="submit">
+            {isUpdatingCafe ? (
+              <RefreshCcwIcon className="animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </DialogContent>

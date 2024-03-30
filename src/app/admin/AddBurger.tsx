@@ -22,6 +22,7 @@ import {
 import { Textarea } from "~/app/_components/ui/textarea";
 import { InsertBurgerSchema } from "~/lib/utils";
 import { useState } from "react";
+import { RefreshCcwIcon } from "lucide-react";
 
 export function AddBurger({
   refetchBurgers,
@@ -34,7 +35,7 @@ export function AddBurger({
     resolver: zodResolver(InsertBurgerSchema),
   });
 
-  const { mutate } = api.burger.addBurger.useMutation({
+  const { mutate, isPending } = api.burger.addBurger.useMutation({
     onSuccess: () => {
       setOpen(false);
       refetchBurgers();
@@ -144,7 +145,13 @@ export function AddBurger({
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button disabled={isPending} type="submit">
+              {isPending ? (
+                <RefreshCcwIcon className="animate-spin" />
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </form>
         </Form>
       </DialogContent>

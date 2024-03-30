@@ -32,6 +32,7 @@ import { type SelectBurger } from "~/server/db/types";
 import { Checkbox } from "~/app/_components/ui/checkbox";
 import { ImageUploader } from "../_components/ImageUploader";
 import { useToast } from "../_components/ui/use-toast";
+import { RefreshCcwIcon } from "lucide-react";
 
 export function EditBurger({
   burger,
@@ -67,12 +68,13 @@ export function EditBurger({
     defaultValues: { ...burger, rating: burger.rating?.toString() },
   });
 
-  const { mutate } = api.burger.updateBurger.useMutation({
-    onSuccess: () => {
-      setOpen(false);
-      router.refresh();
-    },
-  });
+  const { mutate, isPending: isUpdatingBurger } =
+    api.burger.updateBurger.useMutation({
+      onSuccess: () => {
+        setOpen(false);
+        router.refresh();
+      },
+    });
 
   function handleSubmit(values: z.infer<typeof UpdateBurgerSchema>) {
     mutate(values);
@@ -207,7 +209,13 @@ export function EditBurger({
             handleFileUpload={handleFileUpload}
             fileToUpload={fileToUpload}
           />
-          <Button type="submit">Submit</Button>
+          <Button disabled={isUpdatingBurger} type="submit">
+            {isUpdatingBurger ? (
+              <RefreshCcwIcon className="animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </DialogContent>

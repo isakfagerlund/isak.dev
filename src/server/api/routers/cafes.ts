@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { cafes } from "~/server/db/schema";
 import { z } from "zod";
 import { InsertCafeSchema, UpdateCafeSchema } from "~/lib/utils";
-import { InsertBurger, type InsertCafe } from "~/server/db/types";
+import { type InsertBurger, type InsertCafe } from "~/server/db/types";
 import { S3Bucket, s3 } from "~/server/s3/client";
 import {
   DeleteObjectCommand,

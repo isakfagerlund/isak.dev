@@ -1,3 +1,4 @@
+/* eslint-disable drizzle/enforce-delete-with-where */
 "use client";
 
 // Inspired by react-hot-toast library

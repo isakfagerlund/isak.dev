@@ -22,6 +22,7 @@ import {
 import { Textarea } from "~/app/_components/ui/textarea";
 import { InsertCafeSchema } from "~/lib/utils";
 import { useState } from "react";
+import { RefreshCcwIcon } from "lucide-react";
 
 export function AddCafe({ refetchCafes }: { refetchCafes: () => unknown }) {
   const [open, setOpen] = useState(false);
@@ -29,7 +30,7 @@ export function AddCafe({ refetchCafes }: { refetchCafes: () => unknown }) {
     resolver: zodResolver(InsertCafeSchema),
   });
 
-  const { mutate } = api.cafes.addCafe.useMutation({
+  const { mutate, isPending } = api.cafes.addCafe.useMutation({
     onSuccess: () => {
       setOpen(false);
       refetchCafes();
@@ -133,7 +134,13 @@ export function AddCafe({ refetchCafes }: { refetchCafes: () => unknown }) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button disabled={isPending} type="submit">
+              {isPending ? (
+                <RefreshCcwIcon className="animate-spin" />
+              ) : (
+                "Submit"
+              )}
+            </Button>
           </form>
         </Form>
       </DialogContent>
