@@ -44,7 +44,7 @@ export const cafesRouter = createTRPCRouter({
       const { Contents: images } = await s3.send(
         new ListObjectsCommand({
           Bucket: S3Bucket,
-          Prefix: `cafes/${input.id}`,
+          Prefix: `cafes/${input.id}/`,
         }),
       );
 

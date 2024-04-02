@@ -11,7 +11,7 @@ import { api } from "~/trpc/server";
 export default async function Cafe({ params }: { params: { id: string } }) {
   const cafe = await api.cafes.getById({ id: params.id });
   const { Contents: images } = await s3.send(
-    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes/${params.id}` }),
+    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes/${params.id}/` }),
   );
 
   const sortedImages = sortS3ImagesByDate(images);

@@ -40,7 +40,7 @@ export const burgerRouter = createTRPCRouter({
       const { Contents: images } = await s3.send(
         new ListObjectsCommand({
           Bucket: S3Bucket,
-          Prefix: `burgers/${input.id}`,
+          Prefix: `burgers/${input.id}/`,
         }),
       );
 

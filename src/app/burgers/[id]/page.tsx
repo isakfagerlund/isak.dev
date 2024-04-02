@@ -14,7 +14,7 @@ export default async function Burger({ params }: { params: { id: string } }) {
   const { Contents: images } = await s3.send(
     new ListObjectsCommand({
       Bucket: S3Bucket,
-      Prefix: `burgers/${params.id}`,
+      Prefix: `burgers/${params.id}/`,
     }),
   );
 
