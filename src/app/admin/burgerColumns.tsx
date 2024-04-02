@@ -22,10 +22,6 @@ export const burgerColumns: ColumnDef<SelectBurger>[] = [
     },
   },
   {
-    accessorKey: "testedFood",
-    header: "Tested Food",
-  },
-  {
     accessorKey: "address",
     header: "Address",
   },
