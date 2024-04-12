@@ -7,7 +7,11 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/sparkles.svg" }],
 } satisfies Metadata;
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Link href="/burgers">
