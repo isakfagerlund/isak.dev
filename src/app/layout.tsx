@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { type Metadata } from "next";
-import { Toaster } from "./_components/ui/toaster";
+import { Toaster } from "./_components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +30,10 @@ export default function RootLayout({
         <main className="container m-auto h-dvh">
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </main>
-        <Toaster />
+        <Toaster
+          toastOptions={{ className: "frost-effect text-white border-none" }}
+          theme="light"
+        />
         <SpeedInsights />
         <Analytics />
       </body>

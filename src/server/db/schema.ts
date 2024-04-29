@@ -46,3 +46,9 @@ export const cafes = createTable("cafes", {
   price: text("price"),
   isPublished: integer("isPublished", { mode: "boolean" }),
 });
+
+export const tickets = createTable("tickets", {
+  id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  ticketName: text("ticket_name"),
+  visitors: int("visitors"),
+});
