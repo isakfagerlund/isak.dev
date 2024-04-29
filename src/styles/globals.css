@@ -82,13 +82,15 @@
 .frost-effect {
   background-color: rgba(229, 229, 229, 0.43); 
   backdrop-filter: blur(58px);
+  -webkit-backdrop-filter: blur(58px);
 }
 
 .frost-effect-button {
-  background-color: #7c7c7c2d; 
+  background-color: rgba(229, 229, 229, 0.43); 
   backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 
 .frost-effect-button:hover {
-  background-color: rgba(182, 182, 182, 0.663)
+  background-color: rgba(207, 207, 207, 0.663); 
 }
