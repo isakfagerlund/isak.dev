@@ -4,18 +4,6 @@ import { tickets } from "~/server/db/schema";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
 import { FrostCard } from "./FrostCard";
-import { atomWithStorage } from "jotai/utils";
-
-interface Order {
-  name: string;
-  order: string;
-  milk: string;
-}
-
-export const orderPlaced = atomWithStorage<Order | undefined>(
-  "orderPlaced",
-  undefined,
-);
 
 export default async function BrunchPage() {
   const visitors = await db.query.tickets.findFirst({
