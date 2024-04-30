@@ -52,3 +52,9 @@ export const tickets = createTable("tickets", {
   ticketName: text("ticket_name"),
   visitors: int("visitors"),
 });
+
+export const orders = createTable("orders", {
+  id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  order: text("order").notNull(),
+});
