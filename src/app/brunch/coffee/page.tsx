@@ -89,14 +89,7 @@ export default function CoffeePage() {
 
   if (isOrderPlaced) {
     return (
-      <main className="flex h-dvh items-center justify-center text-white sm:p-7">
-        <Image
-          src="/brunch-bg.jpg"
-          alt="bg image"
-          width={1280}
-          height={832}
-          className="bg-img absolute left-0 top-0 h-dvh w-full select-none object-cover"
-        />
+      <>
         <div className="fixed bottom-3 right-5 z-10 sm:hidden">
           <Button asChild className="frost-effect" variant="ghost">
             <Link href="/brunch">
@@ -132,19 +125,12 @@ export default function CoffeePage() {
             </Button>
           </Link>
         </div>
-      </main>
+      </>
     );
   }
 
   return (
-    <main className="flex h-dvh items-center justify-center text-white sm:p-7">
-      <Image
-        src="/brunch-bg.jpg"
-        alt="bg image"
-        width={1280}
-        height={832}
-        className="bg-img absolute left-0 top-0 h-dvh w-full select-none object-cover"
-      />
+    <>
       <div className="fixed bottom-3 right-5 z-10 sm:hidden">
         <Button asChild className="frost-effect" variant="ghost">
           <Link href="/brunch">
@@ -255,6 +241,6 @@ export default function CoffeePage() {
           </form>
         </Form>
       </div>
-    </main>
+    </>
   );
 }
