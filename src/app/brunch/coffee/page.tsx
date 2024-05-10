@@ -29,14 +29,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-
-const drinks = {
-  flatWhite: "Flat White",
-  cappucchino: "Cappucchino",
-  americano: "Americano",
-  espresso: "Espresso",
-  doubleEspresso: "Double Espresso",
-} as const;
+import { drinks } from "./helpers";
 
 interface Order {
   name: string;
