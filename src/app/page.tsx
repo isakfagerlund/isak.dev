@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { BurgerIcon } from "./_components/BurgerIcon";
 import { Coffee } from "lucide-react";
+import { type Viewport } from "next";
+
+export const viewport = {
+  themeColor: "#fb923c",
+} satisfies Viewport;
 
 export default async function Home() {
   return (
-    <main className="container relative flex min-h-screen flex-col border-8 border-orange-400 bg-blue-800 p-5 text-white md:text-lg">
+    <main className="container relative flex h-dvh flex-col border-8 border-orange-400 bg-blue-800 p-5 text-white md:text-lg">
       <div className="flex h-1/3 flex-grow flex-col justify-start">
         <h1 className="text-2xl font-bold tracking-wide md:text-3xl">
           Isak Fagerlund
