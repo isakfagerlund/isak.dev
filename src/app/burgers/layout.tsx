@@ -13,13 +13,13 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="container">
       <Link href="/burgers">
         <h1 className="pt-6 text-xl lowercase">
           Isak&apos;s Burger recommendations
         </h1>
       </Link>
       {children}
-    </>
+    </div>
   );
 }
