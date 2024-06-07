@@ -9,10 +9,12 @@ export default async function Burgers({
 }: {
   searchParams: { country: string | undefined };
 }) {
-  const { Contents: images } = await s3.send(
-    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `burgers` }),
-  );
-  const allBurgers = await api.burger.getAllPublished();
+  const [s3Response, allBurgers] = await Promise.all([
+    s3.send(new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `burgers` })),
+    api.burger.getAllPublished(),
+  ]);
+
+  const { Contents: images } = s3Response;
   const allCountries = allBurgers.map((burger) => burger.country);
   const allCountriesUnique = [...new Set(allCountries)].filter(
     Boolean,

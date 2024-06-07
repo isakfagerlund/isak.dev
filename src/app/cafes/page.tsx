@@ -9,15 +9,16 @@ export default async function Cafes({
 }: {
   searchParams: { country: string | undefined };
 }) {
-  const { Contents: images } = await s3.send(
-    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes` }),
-  );
-  const allCafes = await api.cafes.getAllPublished();
+  const [s3Response, allCafes] = await Promise.all([
+    s3.send(new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes` })),
+    api.cafes.getAllPublished(),
+  ]);
+
+  const { Contents: images } = s3Response;
   const allCountries = allCafes.map((cafe) => cafe.country);
   const allCountriesUnique = [...new Set(allCountries)].filter(
     Boolean,
   ) as string[];
-
   const countryWithEmojji = allCountriesUnique.find(
     (c) =>
       searchParams.country &&
