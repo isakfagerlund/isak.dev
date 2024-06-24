@@ -9,10 +9,15 @@ import { S3Bucket, s3 } from "~/server/s3/client";
 import { api } from "~/trpc/server";
 
 export default async function Cafe({ params }: { params: { id: string } }) {
-  const cafe = await api.cafes.getById({ id: params.id });
-  const { Contents: images } = await s3.send(
-    new ListObjectsCommand({ Bucket: S3Bucket, Prefix: `cafes/${params.id}/` }),
-  );
+  const [cafe, { Contents: images }] = await Promise.all([
+    api.cafes.getById({ id: params.id }),
+    s3.send(
+      new ListObjectsCommand({
+        Bucket: S3Bucket,
+        Prefix: `cafes/${params.id}/`,
+      }),
+    ),
+  ]);
 
   const sortedImages = sortS3ImagesByDate(images);
 

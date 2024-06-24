@@ -1,7 +1,6 @@
 "use client";
 import { ArrowBigLeft, Coffee } from "lucide-react";
 import { Imbue } from "next/font/google";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/app/_components/ui/button";
 import { Input } from "~/app/_components/ui/input";
