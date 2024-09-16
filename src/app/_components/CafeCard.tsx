@@ -17,11 +17,12 @@ export const CafeCard = ({ cafe, images }: ResturantCardProps) => {
   return (
     <Card>
       <CardHeader className="flex-row justify-between p-4">
-        <div>
-          <p className="font-semibold lowercase">{cafe.cafeName}</p>
-          <p className="font-light lowercase text-gray-600">
-            {cafe.city} {cafe.country?.split(" ")[1]}
-          </p>
+        <div className="w-full">
+          <div className="flex w-full justify-between">
+            <p className="font-semibold lowercase">{cafe.cafeName}</p>
+            <p className="font-semibold lowercase">{cafe.country}</p>
+          </div>
+          <p className="font-light lowercase text-gray-600">{cafe.city}</p>
         </div>
       </CardHeader>
 
