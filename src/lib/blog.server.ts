@@ -1,6 +1,3 @@
-import { readdir, readFile } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
-import path from 'node:path'
 import matter from 'gray-matter'
 
 export interface BlogPost {
@@ -18,60 +15,18 @@ export interface BlogPostMetadata {
   description: string
 }
 
-// Get the blog directory path
-function getBlogDir(): string {
-  // Try different paths for different environments
-  const possiblePaths = [
-    path.join(process.cwd(), 'content', 'blog'), // Development
-    path.join(process.cwd(), '..', 'content', 'blog'), // Some build configs
-  ]
-
-  for (const dir of possiblePaths) {
-    if (existsSync(dir)) {
-      return dir
-    }
-  }
-
-  // Fallback
-  return path.join(process.cwd(), 'content', 'blog')
-}
-
 /**
  * Get all blog posts sorted by date (newest first)
  */
 export async function getAllPosts(): Promise<BlogPostMetadata[]> {
-  const blogDir = getBlogDir()
-
-  if (!existsSync(blogDir)) {
-    console.warn(`Blog directory not found: ${blogDir}`)
-    return []
-  }
-
   try {
-    const files = await readdir(blogDir)
-    const mdFiles = files.filter((file) => file.endsWith('.md'))
+    const posts = await loadPosts()
 
-    const posts = await Promise.all(
-      mdFiles.map(async (file) => {
-        const filePath = path.join(blogDir, file)
-        const fileContents = await readFile(filePath, 'utf8')
-        const { data } = matter(fileContents)
-
-        return {
-          slug: data.slug as string,
-          title: data.title as string,
-          date: data.date as string,
-          description: data.description as string,
-        }
-      })
-    )
-
-    // Sort by date, newest first
-    return posts.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
-    })
+    return posts
+      .map(({ content, ...metadata }): BlogPostMetadata => metadata)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   } catch (error) {
-    console.error('Error reading blog posts:', error)
+    console.error('Error loading blog posts:', error)
     return []
   }
 }
@@ -80,36 +35,68 @@ export async function getAllPosts(): Promise<BlogPostMetadata[]> {
  * Get a single blog post by slug
  */
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const blogDir = getBlogDir()
-
-  if (!existsSync(blogDir)) {
-    console.warn(`Blog directory not found: ${blogDir}`)
-    return null
-  }
-
   try {
-    const files = await readdir(blogDir)
-    const mdFiles = files.filter((file) => file.endsWith('.md'))
+    const posts = await loadPosts()
+    const post = posts.find((entry) => entry.slug === slug)
 
-    for (const file of mdFiles) {
-      const filePath = path.join(blogDir, file)
-      const fileContents = await readFile(filePath, 'utf8')
-      const { data, content } = matter(fileContents)
-
-      if (data.slug === slug) {
-        return {
-          slug: data.slug as string,
-          title: data.title as string,
-          date: data.date as string,
-          description: data.description as string,
-          content,
-        }
-      }
-    }
-
-    return null
+    return post ?? null
   } catch (error) {
-    console.error('Error reading blog post:', error)
+    console.error('Error loading blog post:', error)
     return null
   }
+}
+
+interface LoadedPost extends BlogPost {}
+
+let cachedPosts: LoadedPost[] | null = null
+
+async function loadPosts(): Promise<LoadedPost[]> {
+  if (cachedPosts) {
+    return cachedPosts
+  }
+
+  const modules = import.meta.glob('/content/blog/*.md', {
+    eager: true,
+    import: 'default',
+    query: '?raw',
+  }) as Record<string, string>
+
+  const posts: LoadedPost[] = Object.entries(modules).map(([filePath, fileContents]) => {
+    const { data, content } = matter(fileContents)
+
+    const slug = typeof data.slug === 'string' ? data.slug : extractSlugFromPath(filePath)
+
+    return {
+      slug,
+      title: ensureString(data.title, slug),
+      date: ensureDateString(data.date),
+      description: ensureString(data.description, ''),
+      content,
+    }
+  })
+
+  cachedPosts = posts
+  return posts
+}
+
+function extractSlugFromPath(filePath: string): string {
+  const segments = filePath.split('/')
+  const fileName = segments[segments.length - 1] || ''
+  return fileName.replace(/\.md$/i, '')
+}
+
+function ensureString(value: unknown, fallback: string): string {
+  return typeof value === 'string' ? value : fallback
+}
+
+function ensureDateString(value: unknown): string {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (value instanceof Date) {
+    return value.toISOString()
+  }
+
+  return '1970-01-01'
 }

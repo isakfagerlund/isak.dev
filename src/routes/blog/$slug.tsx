@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { formatDate, type BlogPost } from '@/lib/blog'
+import { formatDate } from '@/lib/blog'
 import { getPostBySlug } from '@/lib/blog.server'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 export const Route = createFileRoute('/blog/$slug')({
-  component: BlogPost,
+  component: BlogPostPage,
   loader: async ({ params }) => {
     const post = await getPostBySlug(params.slug)
     if (!post) {
@@ -26,7 +26,7 @@ export const Route = createFileRoute('/blog/$slug')({
   }),
 })
 
-function BlogPost() {
+function BlogPostPage() {
   const { post } = Route.useLoaderData()
 
   return (
