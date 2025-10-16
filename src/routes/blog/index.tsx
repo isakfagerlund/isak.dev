@@ -5,7 +5,7 @@ import { getAllPosts } from '@/lib/blog.server'
 export const Route = createFileRoute('/blog/')({
   component: BlogList,
   loader: async () => {
-    const posts = getAllPosts()
+    const posts = await getAllPosts()
     return { posts }
   },
   head: () => ({

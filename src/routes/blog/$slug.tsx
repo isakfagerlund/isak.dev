@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm'
 export const Route = createFileRoute('/blog/$slug')({
   component: BlogPost,
   loader: async ({ params }) => {
-    const post = getPostBySlug(params.slug)
+    const post = await getPostBySlug(params.slug)
     if (!post) {
       throw notFound()
     }
