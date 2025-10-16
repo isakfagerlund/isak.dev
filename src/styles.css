@@ -144,6 +144,7 @@ code {
   }
   body {
     @apply bg-background text-foreground;
+    background: var(--brand-primary);
   }
 }
 
@@ -168,4 +169,55 @@ code {
 @theme {
   --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
   --animate-scroll-left: scroll-left 40s linear infinite;
+}
+
+/* Blog prose styles */
+.prose {
+  @apply text-brand-text/90;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply text-brand-text font-black;
+}
+
+.prose a {
+  @apply text-brand-text underline hover:text-brand-muted transition-colors;
+}
+
+.prose strong {
+  @apply text-brand-text font-black;
+}
+
+.prose code {
+  @apply text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-[#0d1117] rounded-lg overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent text-[#e6edf3];
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-brand-text/40 pl-6 italic;
+}
+
+.prose ul,
+.prose ol {
+  @apply text-brand-text/90;
+}
+
+.prose hr {
+  @apply border-brand-text/20;
 }

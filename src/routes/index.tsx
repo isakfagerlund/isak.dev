@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -11,8 +11,13 @@ function App() {
         <h1 className="text-6xl md:text-8xl font-black text-brand-text mb-4 tracking-tight lowercase">
           isak.dev
         </h1>
-        <p className="text-xl md:text-2xl text-brand-text font-bold tracking-wide lowercase">
+        <p className="text-xl md:text-2xl text-brand-text font-bold tracking-wide lowercase mb-3">
           currently at: <a href="https://autarc.energy/en" target="_blank" rel="noopener noreferrer" className="animate-pulse-slow hover:underline">autarc</a>
+        </p>
+        <p className="text-base md:text-xl text-brand-muted font-bold tracking-wide lowercase">
+          <Link to="/blog" className="hover:underline hover:text-brand-muted transition-colors">
+            thoughts →
+          </Link>
         </p>
       </div>
 

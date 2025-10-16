@@ -4,6 +4,11 @@ import viteReact from '@vitejs/plugin-react'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import {nitro} from 'nitro/vite'
+import mdx from '@mdx-js/rollup'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import remarkGfm from 'remark-gfm'
 
 const config = defineConfig({
   plugins: [
@@ -12,6 +17,25 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
+    mdx({
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypePrettyCode,
+          {
+            theme: 'github-dark',
+            keepBackground: false,
+          },
+        ],
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap',
+          },
+        ],
+      ],
+    }),
     tanstackStart(),
     nitro(),
     viteReact(),
