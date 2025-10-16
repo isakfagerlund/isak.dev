@@ -20,12 +20,15 @@
 		"indentStyle": "tab"
 	},
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
-	},
+        "linter": {
+                "enabled": true,
+                "rules": {
+                        "recommended": true,
+                        "suspicious": {
+                                "noUnknownAtRules": "off"
+                        }
+                }
+        },
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"
