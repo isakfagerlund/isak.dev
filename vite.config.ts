@@ -18,6 +18,7 @@ const config = defineConfig({
     }),
     tailwindcss(),
     mdx({
+      include: /\.mdx$/,  // Only process .mdx files, not .md files
       remarkPlugins: [remarkGfm],
       rehypePlugins: [
         rehypeSlug,

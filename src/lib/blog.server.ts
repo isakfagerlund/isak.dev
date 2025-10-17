@@ -55,25 +55,28 @@ async function loadPosts(): Promise<LoadedPost[]> {
     return cachedPosts
   }
 
-  const modules = import.meta.glob('/content/blog/*.md', {
+  // Dynamically import all markdown files from src/content/blog
+  // Using eager: true and as: 'raw' to get the raw content directly
+  const modules = import.meta.glob('/src/content/blog/*.md', {
     eager: true,
-    import: 'default',
-    query: '?raw',
+    as: 'raw',
   }) as Record<string, string>
 
-  const posts: LoadedPost[] = Object.entries(modules).map(([filePath, fileContents]) => {
+  const posts: LoadedPost[] = []
+
+  for (const [filePath, fileContents] of Object.entries(modules)) {
     const { data, content } = matter(fileContents)
 
     const slug = typeof data.slug === 'string' ? data.slug : extractSlugFromPath(filePath)
 
-    return {
+    posts.push({
       slug,
       title: ensureString(data.title, slug),
       date: ensureDateString(data.date),
       description: ensureString(data.description, ''),
       content,
-    }
-  })
+    })
+  }
 
   cachedPosts = posts
   return posts
