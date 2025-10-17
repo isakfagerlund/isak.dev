@@ -56,10 +56,11 @@ async function loadPosts(): Promise<LoadedPost[]> {
   }
 
   // Dynamically import all markdown files from src/content/blog
-  // Using eager: true and as: 'raw' to get the raw content directly
-  const modules = import.meta.glob('/src/content/blog/*.md', {
+  // Using eager: true with the raw query to get the file contents directly
+  const modules = import.meta.glob('../content/blog/*.md', {
     eager: true,
-    as: 'raw',
+    query: '?raw',
+    import: 'default',
   }) as Record<string, string>
 
   const posts: LoadedPost[] = []
