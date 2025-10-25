@@ -1,17 +1,17 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { formatDate } from '@/lib/blog'
-import { getPostBySlug } from '@/lib/blog.server'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { formatDate } from "@/lib/blog";
+import { getPostBySlug } from "@/lib/blog.server";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
-export const Route = createFileRoute('/blog/$slug')({
+export const Route = createFileRoute("/blog/$slug")({
   component: BlogPostPage,
   loader: async ({ params }) => {
-    const post = await getPostBySlug(params.slug)
+    const post = await getPostBySlug({ data: params.slug });
     if (!post) {
-      throw notFound()
+      throw notFound();
     }
-    return { post }
+    return { post };
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -19,15 +19,15 @@ export const Route = createFileRoute('/blog/$slug')({
         title: `${loaderData?.post.title} - isak.dev`,
       },
       {
-        name: 'description',
-        content: loaderData?.post.description || '',
+        name: "description",
+        content: loaderData?.post.description || "",
       },
     ],
   }),
-})
+});
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData()
+  const { post } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-brand-primary px-6 py-12 md:px-12 md:py-16">
@@ -78,8 +78,12 @@ function BlogPostPage() {
                   <a
                     href={href}
                     className="text-brand-text underline hover:text-brand-muted transition-colors font-bold"
-                    target={href?.startsWith('http') ? '_blank' : undefined}
-                    rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    target={href?.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      href?.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                   >
                     {children}
                   </a>
@@ -98,23 +102,25 @@ function BlogPostPage() {
                   <li className="lowercase leading-relaxed">{children}</li>
                 ),
                 strong: ({ children }) => (
-                  <strong className="font-black text-brand-text">{children}</strong>
+                  <strong className="font-black text-brand-text">
+                    {children}
+                  </strong>
                 ),
                 em: ({ children }) => (
                   <em className="italic text-brand-text">{children}</em>
                 ),
                 code: ({ className, children }) => {
-                  const isInline = !className
+                  const isInline = !className;
                   if (isInline) {
                     return (
                       <code className="bg-brand-text/10 text-brand-text px-1.5 py-0.5 rounded text-sm font-mono">
                         {children}
                       </code>
-                    )
+                    );
                   }
                   return (
                     <code className={`${className} text-sm`}>{children}</code>
-                  )
+                  );
                 },
                 pre: ({ children }) => (
                   <pre className="bg-[#0d1117] text-[#e6edf3] p-6 rounded-lg overflow-x-auto mb-6 border border-brand-text/10">
@@ -124,7 +130,7 @@ function BlogPostPage() {
                 img: ({ src, alt }) => (
                   <img
                     src={src}
-                    alt={alt || ''}
+                    alt={alt || ""}
                     className="w-full rounded-lg my-8 border-2 border-brand-text/20"
                   />
                 ),
@@ -133,9 +139,7 @@ function BlogPostPage() {
                     {children}
                   </blockquote>
                 ),
-                hr: () => (
-                  <hr className="border-brand-text/20 my-12" />
-                ),
+                hr: () => <hr className="border-brand-text/20 my-12" />,
               }}
             >
               {post.content}
@@ -153,5 +157,5 @@ function BlogPostPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

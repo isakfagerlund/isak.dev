@@ -1,28 +1,26 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { formatDate, type BlogPostMetadata } from '@/lib/blog'
-import { getAllPosts } from '@/lib/blog.server'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { formatDate, type BlogPostMetadata } from "@/lib/blog";
+import { getAllPosts } from "@/lib/blog.server";
 
-export const Route = createFileRoute('/blog/')({
+export const Route = createFileRoute("/blog/")({
   component: BlogList,
-  loader: async () => {
-    const posts = await getAllPosts()
-    return { posts }
-  },
+  loader: async () => await getAllPosts(),
   head: () => ({
     meta: [
       {
-        title: 'blog - isak.dev',
+        title: "blog - isak.dev",
       },
       {
-        name: 'description',
-        content: 'thoughts on software development, web technologies, and lessons learned',
+        name: "description",
+        content:
+          "thoughts on software development, web technologies, and lessons learned",
       },
     ],
   }),
-})
+});
 
 function BlogList() {
-  const { posts } = Route.useLoaderData()
+  const posts = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-brand-primary px-6 py-12 md:px-12 md:py-16">
@@ -74,5 +72,5 @@ function BlogList() {
         </div>
       </div>
     </div>
-  )
+  );
 }
