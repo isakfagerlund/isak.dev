@@ -155,16 +155,14 @@ function PhotosPage() {
           <div>
             <Link
               to="/"
-              className="text-sm font-semibold uppercase tracking-widest text-neutral-400"
+              className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400"
             >
               isak.dev
             </Link>
-            <h1 className="mt-2 text-3xl font-semibold lowercase tracking-tight">
+            <h1 className="mt-3 text-3xl font-semibold lowercase tracking-tight">
               photos
             </h1>
-            <p className="mt-1 text-sm text-neutral-500">
-              Private photo library. Public visitors only see blurred previews.
-            </p>
+            <div className="mt-3 h-px w-16 bg-neutral-200" />
           </div>
 
           <div className="w-full md:w-auto">
@@ -300,7 +298,7 @@ function PhotosPage() {
                           src={photo.src}
                           alt={photo.alt}
                           loading="lazy"
-                          className={`w-full rounded-2xl object-cover transition ${
+                          className={`h-full w-full rounded-2xl object-cover transition ${
                             photo.blurred ? "blur-md" : ""
                           }`}
                         />
@@ -313,47 +311,39 @@ function PhotosPage() {
           </section>
         ))}
 
-        <section className="rounded-3xl border border-dashed border-neutral-200 bg-neutral-50 p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h3 className="text-lg font-semibold">Bulk upload</h3>
-              <p className="mt-1 text-sm text-neutral-500">
-                Upload multiple files into a selected album. Variants and
-                metadata are generated automatically.
-              </p>
+        {isAuthenticated ? (
+          <section className="rounded-3xl border border-dashed border-neutral-200 bg-neutral-50 p-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">Bulk upload</h3>
+                <p className="mt-1 text-sm text-neutral-500">
+                  Upload multiple files into a selected album. Variants and
+                  metadata are generated automatically.
+                </p>
+              </div>
             </div>
-            {!isAuthenticated ? (
-              <span className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
-                Login required
-              </span>
-            ) : null}
-          </div>
-          <form className="mt-4 grid gap-4 md:grid-cols-[1fr_auto_auto]">
-            <select
-              disabled={!isAuthenticated}
-              className="rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600 disabled:cursor-not-allowed disabled:bg-neutral-100"
-            >
-              {albumOptions.map((album) => (
-                <option key={album.id} value={album.id}>
-                  {album.title}
-                </option>
-              ))}
-            </select>
-            <input
-              type="file"
-              multiple
-              disabled={!isAuthenticated}
-              className="rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600 file:mr-4 file:rounded-full file:border-0 file:bg-neutral-200 file:px-3 file:py-1 file:text-xs file:font-semibold file:uppercase file:text-neutral-700 disabled:cursor-not-allowed disabled:bg-neutral-100"
-            />
-            <button
-              type="button"
-              disabled={!isAuthenticated}
-              className="rounded-2xl bg-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white disabled:cursor-not-allowed disabled:bg-neutral-300"
-            >
-              Start upload
-            </button>
-          </form>
-        </section>
+            <form className="mt-4 grid gap-4 md:grid-cols-[1fr_auto_auto]">
+              <select className="rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600">
+                {albumOptions.map((album) => (
+                  <option key={album.id} value={album.id}>
+                    {album.title}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="file"
+                multiple
+                className="rounded-2xl border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-600 file:mr-4 file:rounded-full file:border-0 file:bg-neutral-200 file:px-3 file:py-1 file:text-xs file:font-semibold file:uppercase file:text-neutral-700"
+              />
+              <button
+                type="button"
+                className="rounded-2xl bg-neutral-900 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white"
+              >
+                Start upload
+              </button>
+            </form>
+          </section>
+        ) : null}
       </main>
 
       {slideshow && currentPhoto ? (
