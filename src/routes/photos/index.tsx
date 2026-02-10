@@ -253,7 +253,7 @@ function PhotosPage() {
                       ) : null}
                     </div>
 
-                    <div className="flex flex-1 flex-col justify-between gap-4 px-4 pb-4 lg:px-6 lg:py-6">
+                  <div className="mt-4 columns-1 gap-4 px-4 pb-4 sm:columns-2 lg:columns-3 lg:px-6 lg:pb-6">
                       <div>
                         <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-neutral-400">
                           <span>{album.date}</span>
