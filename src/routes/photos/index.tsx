@@ -18,6 +18,10 @@ export const Route = createFileRoute("/photos/")({
       {
         title: "photos – isak.dev",
       },
+      {
+        name: "theme-color",
+        content: "#ffffff",
+      },
     ],
   }),
 });
@@ -151,7 +155,7 @@ function PhotosPage() {
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       <header className="sticky top-0 z-20 border-b border-neutral-200/70 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6 md:py-6">
           <div>
             <Link
               to="/"
@@ -214,7 +218,7 @@ function PhotosPage() {
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col gap-16 px-6 py-12">
+      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-8 md:gap-16 md:px-6 md:py-12">
         {categories.map((category) => (
           <section key={category.id} className="space-y-8">
             <div>
@@ -232,24 +236,24 @@ function PhotosPage() {
               {category.albums.map((album) => (
                 <article
                   key={album.id}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+                  className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm"
                 >
                   <div className="flex flex-col gap-6 lg:flex-row">
-                    <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-100 lg:w-80">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden lg:aspect-auto lg:w-80 lg:self-stretch">
                       <img
                         src={album.coverSrc}
                         alt={`${album.title} cover`}
-                        className={`h-56 w-full object-cover transition ${
+                        className={`h-full w-full object-cover transition ${
                           album.coverBlurred ? "blur-md" : ""
                         }`}
                         loading="lazy"
                       />
                       {album.coverBlurred ? (
-                        <div className="absolute inset-0 rounded-2xl ring-1 ring-white/40" />
+                        <div className="absolute inset-0 ring-1 ring-white/40" />
                       ) : null}
                     </div>
 
-                    <div className="flex flex-1 flex-col justify-between gap-4">
+                    <div className="flex flex-1 flex-col justify-between gap-4 px-4 pb-4 lg:px-6 lg:py-6">
                       <div>
                         <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wide text-neutral-400">
                           <span>{album.date}</span>
@@ -288,7 +292,7 @@ function PhotosPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 columns-1 gap-4 sm:columns-2 lg:columns-3">
+                  <div className="columns-1 gap-4 px-4 pb-4 sm:columns-2 lg:columns-3 lg:px-6 lg:pb-6">
                     {album.photos.map((photo) => (
                       <figure
                         key={photo.id}
@@ -298,7 +302,7 @@ function PhotosPage() {
                           src={photo.src}
                           alt={photo.alt}
                           loading="lazy"
-                          className={`h-full w-full rounded-2xl object-cover transition ${
+                          className={`h-full w-full object-cover transition ${
                             photo.blurred ? "blur-md" : ""
                           }`}
                         />
